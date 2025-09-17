@@ -1,0 +1,15 @@
+/* 🔹 Hide Curl preview and Request URL */
+.swagger-ui .opblock .opblock-section .curl-command,
+.swagger-ui .opblock .opblock-section .request-url {
+    display: none !important;
+}
+
+/* 🔹 Hide Response Headers */
+.swagger-ui .response .response-headers {
+    display: none !important;
+}
+
+/* 🔹 Hide "Server response" meta links */
+.swagger-ui .response-col_links {
+    display: none !important;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <jobTitle>Application Rejected</jobTitle>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #ffffff;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #e53935;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h2 {
+            color: #e53935;
+        }
+        .content {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 13px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2>❌ Application Update</h2>
+    </div>
+    <div class="content">
+        <p>Dear <strong th:text="${userName}">Candidate</strong>,</p>
+
+        <p>We regret to inform you that your application for the position of
+            <strong th:text="${jobTitle}">Java Developer</strong> at
+            <strong th:text="${companyName}">Tech Corp</strong> has been
+            <span style="color: #e53935; font-weight: bold;">REJECTED</span>.</p>
+
+        <p>We encourage you to explore other opportunities available on our portal. Don’t lose hope – your next opportunity is waiting!</p>
+    </div>
+    <div class="footer">
+        <p>Best regards,<br/>Job Portal Team</p>
+    </div>
+</div>
+</body>
+</html>
