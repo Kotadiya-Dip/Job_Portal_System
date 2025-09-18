@@ -25,6 +25,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+        String path = request.getServletPath();
+
+        // 🚨 Skip JWT check for public endpoints
+        if (path.startsWith("/jobPortal/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
@@ -39,14 +47,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 List<String> roles = jwtUtils.extractRoles(token);
 
                 UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(username, null, roles.stream().map(r -> (org.springframework.security.core.GrantedAuthority) () -> r).toList());
+                        new UsernamePasswordAuthenticationToken(
+                                username,
+                                null,
+                                roles.stream().map(r -> (org.springframework.security.core.GrantedAuthority) () -> r).toList()
+                        );
 
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
 
         filterChain.doFilter(request, response);
     }
+
 }
