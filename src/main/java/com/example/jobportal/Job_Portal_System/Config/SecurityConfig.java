@@ -35,27 +35,27 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // ✅ Public endpoints
                         .requestMatchers(
-                                "/jobPortal/auth/**",        // login + register
-                                "/jobPortal/jobs/search/**", // job search
-                                "/jobPortal/users/username/**", // find user by username
+                                "/auth/**",        // login + register
+                                "/jobs/search/**", // job search
+                                "/users/username/**", // find user by username
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()
 
                         // 🔒 Role-based access
-                        .requestMatchers("/jobPortal/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers("/jobPortal/users/update/**").hasAnyAuthority("EMPLOYEE", "APPLICANT")
-                        .requestMatchers("/jobPortal/user/paginated/**").permitAll()
-                        .requestMatchers("/jobPortal/users/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
-                        .requestMatchers("/jobPortal/job/paginated/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
-                        .requestMatchers("/jobPortal/jobs/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
-                        .requestMatchers("/jobPortal/applications/paginated").hasAnyAuthority("EMPLOYEE", "ADMIN")
-                        .requestMatchers("/jobPortal/applications").hasAnyAuthority("APPLICANT", "EMPLOYEE", "ADMIN")
-                        .requestMatchers("/jobPortal/applications/job/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
-                        .requestMatchers("/jobPortal/applications/id/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
-                        .requestMatchers("/jobPortal/applications/user/**").hasAnyAuthority("APPLICANT", "EMPLOYEE")
-                        .requestMatchers("/jobPortal/applications/apply").hasAnyAuthority("APPLICANT", "EMPLOYEE")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/users/update/**").hasAnyAuthority("EMPLOYEE", "APPLICANT")
+                        .requestMatchers("/user/paginated/**").permitAll()
+                        .requestMatchers("/users/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/job/paginated/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/jobs/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/applications/paginated").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/applications").hasAnyAuthority("APPLICANT", "EMPLOYEE", "ADMIN")
+                        .requestMatchers("/applications/job/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/applications/id/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/applications/user/**").hasAnyAuthority("APPLICANT", "EMPLOYEE")
+                        .requestMatchers("/applications/apply").hasAnyAuthority("APPLICANT", "EMPLOYEE")
 
                         // 🔒 Everything else
                         .anyRequest().authenticated()
