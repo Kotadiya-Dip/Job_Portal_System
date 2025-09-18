@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: Job_Portal_System
-    env: java
+    name: job-portal-system
+    env: docker
     plan: free
-    buildCommand: ./mvnw clean package -DskipTests
-    startCommand: "java -jar target/Job_Portal_System-0.0.1-SNAPSHOT.jar"
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
     envVars:
       - key: MONGODB_URI
         sync: false
