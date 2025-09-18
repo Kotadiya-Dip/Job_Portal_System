@@ -1,15 +1,14 @@
-# Step 1: Build the JAR using Maven
-FROM maven:3.9.6-eclipse-temurin-21 AS build
-
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
-
-# Step 2: Run the JAR with JDK 21
+# Use Java 21
 FROM eclipse-temurin:21-jdk-jammy
 
+# Set working directory
 WORKDIR /app
-COPY --from=build /app/target/Job_Portal_System-0.0.1-SNAPSHOT.jar app.jar
 
+# Copy the jar file
+COPY target/Job_Portal_System-0.0.1-SNAPSHOT.jar app.jar
+
+# Expose port 8080
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Start the app
+ENTRYPOINT ["java", "-jar", "app.jar"]
