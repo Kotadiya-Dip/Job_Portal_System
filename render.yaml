@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: Job_Portal_System
+    env: docker
+    plan: free   # or starter, depending on your choice
+    dockerfilePath: ./Job_Portal_System/Dockerfile
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: MONGODB_URI
+        sync: false   # set in Render dashboard
+
