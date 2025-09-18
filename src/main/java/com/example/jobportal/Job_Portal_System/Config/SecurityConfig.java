@@ -18,12 +18,13 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity // 👈 allows @PreAuthorize
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
 
@@ -32,35 +33,35 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Public endpoints
-                        .requestMatchers("/auth/**").permitAll()
-
-                        // EMPLOYEE only endpoints
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers("/users/update/**").hasAnyAuthority("EMPLOYEE","APPLICANT")
-                        .requestMatchers("/users/username/**").permitAll()
-                        .requestMatchers("/user/paginated/**").permitAll()
-                        .requestMatchers("/users/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
-                        .requestMatchers("/jobs/search/**").permitAll()
-                        .requestMatchers("/job/paginated/**").hasAnyAuthority("EMPLOYEE","ADMIN")
-                        .requestMatchers("/jobs/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
-                        .requestMatchers("/applications/paginated").hasAnyAuthority("EMPLOYEE","ADMIN")
-                         .requestMatchers("/applications").hasAnyAuthority("APPLICANT", "EMPLOYEE", "ADMIN") // get all applications
-                        .requestMatchers("/applications/job/**").hasAnyAuthority("EMPLOYEE","ADMIN") // get applications by job
-                        .requestMatchers("/applications/id/**").hasAnyAuthority("EMPLOYEE","ADMIN")
-                        // APPLICANT or EMPLOYEE
-                        .requestMatchers("/applications/id/**").hasAnyAuthority("APPLICANT", "EMPLOYEE")
-                        .requestMatchers("/applications/user/**").hasAnyAuthority("APPLICANT", "EMPLOYEE")
-                        .requestMatchers("/applications/apply").hasAnyAuthority("APPLICANT", "EMPLOYEE") // for POST apply
+                        // ✅ Public endpoints
                         .requestMatchers(
+                                "/jobPortal/auth/**",        // login + register
+                                "/jobPortal/jobs/search/**", // job search
+                                "/jobPortal/users/username/**", // find user by username
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()
-                        // everything else requires authentication
+
+                        // 🔒 Role-based access
+                        .requestMatchers("/jobPortal/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/jobPortal/users/update/**").hasAnyAuthority("EMPLOYEE", "APPLICANT")
+                        .requestMatchers("/jobPortal/user/paginated/**").permitAll()
+                        .requestMatchers("/jobPortal/users/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/jobPortal/job/paginated/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/jobPortal/jobs/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/jobPortal/applications/paginated").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/jobPortal/applications").hasAnyAuthority("APPLICANT", "EMPLOYEE", "ADMIN")
+                        .requestMatchers("/jobPortal/applications/job/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/jobPortal/applications/id/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/jobPortal/applications/user/**").hasAnyAuthority("APPLICANT", "EMPLOYEE")
+                        .requestMatchers("/jobPortal/applications/apply").hasAnyAuthority("APPLICANT", "EMPLOYEE")
+
+                        // 🔒 Everything else
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtAuthFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter,
+                        org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
