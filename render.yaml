@@ -1,12 +1,10 @@
 services:
   - type: web
     name: Job_Portal_System
-    env: docker
-    plan: free   # or starter, depending on your choice
-    dockerfilePath: ./Job_Portal_System/Dockerfile
+    env: java
+    plan: free
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: "java -jar target/Job_Portal_System-0.0.1-SNAPSHOT.jar"
     envVars:
-      - key: SPRING_PROFILES_ACTIVE
-        value: prod
       - key: MONGODB_URI
-        sync: false   # set in Render dashboard
-
+        sync: false
