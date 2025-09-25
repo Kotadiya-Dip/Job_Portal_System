@@ -17,16 +17,16 @@ spring:
       database: jobportal
       auto-index-creation: true
   mail:
-    host: ${SPRING_MAIL_HOST}
-    port: ${SPRING_MAIL_PORT}
-    username: ${SPRING_MAIL_USERNAME}
-    password: ${SPRING_MAIL_PASSWORD}
+    host: smtp.gmail.com
+    port: 587
+    username: dipkotadiya187@gmail.com
+    password: lhez noqx yrpl kdgm
     properties:
       mail:
         smtp:
-          auth: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH}
+          auth: true
           starttls:
-            enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE}
+            enable: true
 
 server:
   port: 8080
