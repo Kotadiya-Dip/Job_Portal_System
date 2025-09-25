@@ -7,11 +7,11 @@ services:
     autoDeploy: true
     envVars:
       - key: MONGODB_URI
-        key1: ${SPRING_MAIL_HOST}
-        key2: ${SPRING_MAIL_PORT}
-        key3: ${SPRING_MAIL_USERNAME}
-        key4: ${SPRING_MAIL_PASSWORD}
-        key5: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH}
-        key6: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE}
+        key1: SPRING_MAIL_HOST
+        key2: SPRING_MAIL_PORT
+        key3: SPRING_MAIL_USERNAME
+        key4: SPRING_MAIL_PASSWORD
+        key5: SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH
+        key6: SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE
 
         sync: false
