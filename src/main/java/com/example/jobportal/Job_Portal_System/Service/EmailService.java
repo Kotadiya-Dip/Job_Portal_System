@@ -31,7 +31,7 @@ public class EmailService {
             // Load template from resources/templates/emails/
             String htmlContent = templateEngine.process("emails/" + templateName, context);
 
-            helper.setFrom("theclassy59@gmail.com");
+            helper.setFrom("dipkotadiya187@gmail.com");
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(htmlContent, true); // true = HTML
