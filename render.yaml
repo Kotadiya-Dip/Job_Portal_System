@@ -9,9 +9,11 @@ services:
       - key: MONGODB_URI
         sync: false
       - key: SPRING_MAIL_USERNAME
-        value: dipkotadiya187@gmail.com
+        sync: false
+#        value: dipkotadiya187@gmail.com
       - key: SPRING_MAIL_PASSWORD
-        value: lheznoqxyrplkdgm
+        sync: false
+#        value: lheznoqxyrplkdgm
 #      - key: SPRING_MAIL_HOST
 #        sync: false
 #      - key: SPRING_MAIL_PORT
