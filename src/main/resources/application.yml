@@ -13,14 +13,14 @@ spring:
 #      port: 11059
 #      password: i14wXExhlSuAwjf1PJRY5zFOpFSuqJ0A
     mongodb:
-      uri: ${MONGODB_URI}
+      uri: mongodb+srv://root:dip1234@cluster0.tdqouji.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: jobportal
       auto-index-creation: true
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${SPRING_MAIL_USERNAME}
-    password: ${SPRING_MAIL_PASSWORD}
+    username: theclassy59@gmail.com
+    password: pvyr vseo awba crfz
     properties:
       mail:
         smtp:
@@ -32,6 +32,5 @@ server:
   port: 8080
   servlet:
     context-path: /jobPortal
-
 
 

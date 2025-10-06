@@ -5,14 +5,7 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     autoDeploy: true
-    envVars:
-      - key: MONGODB_URI
-        sync: false
-      - key: SPRING_MAIL_USERNAME
-        sync: false
-#        value: dipkotadiya187@gmail.com
-      - key: SPRING_MAIL_PASSWORD
-        sync: false
+
 #        value: lheznoqxyrplkdgm
 #      - key: SPRING_MAIL_HOST
 #        sync: false

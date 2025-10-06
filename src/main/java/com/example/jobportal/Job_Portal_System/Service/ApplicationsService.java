@@ -144,6 +144,7 @@ public class ApplicationsService {
                             templateName,
                             variables
                     );
+
                 }
 
                 // Promote role if accepted

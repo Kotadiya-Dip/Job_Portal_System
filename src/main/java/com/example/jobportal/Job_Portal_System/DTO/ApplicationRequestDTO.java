@@ -7,7 +7,7 @@ public class ApplicationRequestDTO {
     @NotBlank(message = "userName is required")
     private String userName;
 
-    @NotBlank(message = "jobId is required")
+    @NotBlank(message = "job name  is required")
     private String jobTitle;
 
     @NotBlank(message = "Resume is Required")

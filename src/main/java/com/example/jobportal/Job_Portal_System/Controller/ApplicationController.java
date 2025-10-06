@@ -46,7 +46,7 @@ public class ApplicationController {
 
     // 👇 Applicant or Employee can view by ID
     @PreAuthorize("hasAnyAuthority('APPLICANT','EMPLOYEE','ADMIN')")
-    @GetMapping("id/{appId}")
+    @GetMapping("/id/{appId}")
     @Operation(summary = "get application by AppId ")
 
     public ApplicationResponseDTO getApplicationById(@PathVariable String appId) {
@@ -54,17 +54,22 @@ public class ApplicationController {
     }
 
     @PreAuthorize("hasAnyAuthority('EMPLOYEE','ADMIN')")
-    @PutMapping("id/{appId}")
+    @PutMapping("/id/{appId}")
     @Operation(summary = "update application by AppId only ADMIN and EMPLOYEE")
 
     public ResponseEntity<?> updateApplicationById(@PathVariable String appId,
                                                    @RequestBody ApplicationRequestDTO applicationDTO){
-        Applications response = applicationsService.updateApplicationById(appId,  applicationDTO);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        try {
+            Applications response = applicationsService.updateApplicationById(appId,  applicationDTO);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @PreAuthorize("hasAnyAuthority('EMPLOYEE','ADMIN')")
-    @DeleteMapping("id/{appId}")
+    @DeleteMapping("/id/{appId}")
     @Operation(summary = "delete application by AppId only ADMIN and EMPLOYEE")
     public ResponseEntity<String> deleteApplicationsById(@PathVariable String appId) {
         if (applicationsService.existsById(appId)) {
