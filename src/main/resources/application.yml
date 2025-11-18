@@ -1,0 +1,36 @@
+springdoc:
+  swagger-ui:
+    custom-css-url: /swagger-ui/swagger-overrides.css
+spring:
+  main:
+    allow-circular-references: true
+
+
+
+  data:
+#    redis:
+#      host: redis-11059.crce182.ap-south-1-1.ec2.redns.redis-cloud.com
+#      port: 11059
+#      password: i14wXExhlSuAwjf1PJRY5zFOpFSuqJ0A
+    mongodb:
+      uri: mongodb+srv://root:dip1234@cluster0.tdqouji.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: jobportal
+      auto-index-creation: true
+  mail:
+    host: smtp.sendgrid.net
+    port: 587
+    username: Job_Portal_Email_Service
+    password: ${SENDGRID_API_KEY}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /jobPortal
+
+
