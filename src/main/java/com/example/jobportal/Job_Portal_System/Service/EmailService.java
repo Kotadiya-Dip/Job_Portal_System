@@ -23,7 +23,7 @@ public class EmailService {
     private TemplateEngine templateEngine;
 
     // Get the sender email from application properties / env variable
-    @Value("${spring.mail.username}")
+    @Value("${mail.sender}")
     private String senderEmail;
 
     public void sendMailBasedOnStatus(String to, String subject, String templateName, Map<String, Object> variables) {

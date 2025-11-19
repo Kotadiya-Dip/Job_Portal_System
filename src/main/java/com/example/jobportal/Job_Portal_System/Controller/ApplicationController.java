@@ -59,12 +59,8 @@ public class ApplicationController {
 
     public ResponseEntity<?> updateApplicationById(@PathVariable String appId,
                                                    @RequestBody ApplicationRequestDTO applicationDTO){
-        try {
             Applications response = applicationsService.updateApplicationById(appId,  applicationDTO);
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
     }
 

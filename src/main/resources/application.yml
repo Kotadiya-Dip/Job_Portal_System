@@ -19,7 +19,7 @@ spring:
   mail:
     host: smtp.sendgrid.net
     port: 587
-    username: Job_Portal_Email_Service
+    username: apikey
     password: ${SENDGRID_API_KEY}
     properties:
       mail:
@@ -27,6 +27,8 @@ spring:
           auth: true
           starttls:
             enable: true
+mail:
+  sender: dipkotadiya187@gmail.com
 
 server:
   port: 8080

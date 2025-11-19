@@ -10,7 +10,7 @@ public class ApplicationRequestDTO {
     @NotBlank(message = "job name  is required")
     private String jobTitle;
 
-    @NotBlank(message = "Resume is Required")
+//    @NotBlank(message = "Resume is Required")
     private String resume;
 
     // ✅ use enum instead of String
