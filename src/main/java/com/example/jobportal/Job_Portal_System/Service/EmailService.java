@@ -1,51 +1,57 @@
 package com.example.jobportal.Job_Portal_System.Service;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sendgrid.*;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 import org.springframework.beans.factory.annotation.Value;
-
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.io.IOException;
 import java.util.Map;
 
 @Service
 public class EmailService {
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private final TemplateEngine templateEngine;
 
-    @Autowired
-    private TemplateEngine templateEngine;
+    @Value("${sendgrid.api-key}")
+    private String sendgridApiKey;
 
-    // Get the sender email from application properties / env variable
-    @Value("${mail.sender}")
+    @Value("${sendgrid.sender}")
     private String senderEmail;
 
+    public EmailService(TemplateEngine templateEngine) {
+        this.templateEngine = templateEngine;
+    }
+
     public void sendMailBasedOnStatus(String to, String subject, String templateName, Map<String, Object> variables) {
+        // Render Thymeleaf template into HTML
+        Context context = new Context();
+        context.setVariables(variables);
+        String htmlContent = templateEngine.process("emails/" + templateName, context);
+
+        Email from = new Email(senderEmail);
+        Email toEmail = new Email(to);
+        Content content = new Content("text/html", htmlContent);
+        Mail mail = new Mail(from, subject, toEmail, content);
+
+        SendGrid sg = new SendGrid(sendgridApiKey);
+        Request request = new Request();
         try {
-            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
 
-            Context context = new Context();
-            context.setVariables(variables);
-
-            // Load template from resources/templates/emails/
-            String htmlContent = templateEngine.process("emails/" + templateName, context);
-
-            helper.setFrom(senderEmail); // use env variable
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(htmlContent, true); // true = HTML
-
-            javaMailSender.send(mimeMessage);
-
-        } catch (MessagingException e) {
-            throw new RuntimeException("Failed to send email", e);
+            // Optional: handle non-2xx
+            if (response.getStatusCode() >= 400) {
+                throw new RuntimeException("SendGrid API error: " + response.getStatusCode() + " body: " + response.getBody());
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException("Failed to send email via SendGrid API", ex);
         }
     }
 }
