@@ -35,7 +35,7 @@ public class UserService {
             User user = new User();
             user.setUserName(userDto.getUserName());
             user.setEmail(userDto.getEmail());
-            user.setPassword(userDto.getPassword());
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             user.setRoles(Arrays.asList("CANDIDATE"));
             userRepository.save(user);
             return true;
@@ -57,7 +57,8 @@ public class UserService {
         User user = new User();
         user.setUserName(userDto.getUserName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
         user.setRoles(Arrays.asList("CANDIDATE"));
 
         User savedUser = userRepository.save(user);
